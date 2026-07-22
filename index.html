@@ -60,7 +60,7 @@
     <div class="foot">Confidential · Not an offer to sell securities</div>
   </div>
 <script>
-  var CODE="6920";
+  var CODE_HASH="28c83f4635d193b3cf29a03dcda640e46122af04869854943f7364387164e212";
   if(sessionStorage.getItem('nyc_gate')==='1'){location.replace('home.html');}
   var wrap=document.getElementById('codewrap');
   var code=document.getElementById('code');
@@ -75,11 +75,14 @@
       b.classList.toggle('active',active);
     });
   }
+  function sha256(str){return crypto.subtle.digest('SHA-256',new TextEncoder().encode(str)).then(function(b){return [].map.call(new Uint8Array(b),function(x){return('0'+x.toString(16)).slice(-2);}).join('');});}
   function fail(){wrap.classList.add('err');msg.classList.add('show');code.value='';render();code.focus();}
   function attempt(){
     if(code.value.length<4)return;
-    if(code.value===CODE){sessionStorage.setItem('nyc_gate','1');window.location.href='home.html';}
-    else{fail();}
+    sha256(code.value).then(function(h){
+      if(h===CODE_HASH){sessionStorage.setItem('nyc_gate','1');window.location.href='home.html';}
+      else{fail();}
+    });
   }
   code.addEventListener('input',function(){
     code.value=code.value.replace(/[^0-9]/g,'').slice(0,4);
