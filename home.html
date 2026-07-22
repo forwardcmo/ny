@@ -235,6 +235,19 @@
     .mat.wide{flex-direction:column;align-items:flex-start;gap:18px}
     .mat.wide .go{margin-top:4px}
   }
+
+  @media(max-width:640px){
+    .hero{min-height:100svh;justify-content:flex-start}
+    .hero .topconf{position:static;left:auto;top:auto;padding:118px 28px 0;font-size:11px}
+    .hero .inner{margin-top:auto;padding-top:24px;padding-bottom:52px}
+    .hero .heyebrow{margin-bottom:16px;font-size:11px}
+    .hero h1{font-size:clamp(52px,15vw,72px);line-height:0.92}
+    .hero .sub{font-size:20px;margin-top:20px;max-width:none}
+    .hero .herofoot{margin-top:36px;padding-top:26px;gap:28px}
+    .hero .herostats{gap:22px 40px}
+    .hero .heroact,.hero .heroact .btn{width:100%}
+    .hero .heroact .btn{justify-content:center}
+  }
 </style>
 <template id="__bundler_thumbnail" data-bg-color="#0E1E3A">
   <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
@@ -328,14 +341,14 @@
     </div>
     <div class="mats">
       <a class="mat" href="assets/investor-overview.pdf" target="_blank" rel="noopener">
-        <div class="thumb"><img src="assets/overview-thumb.png" alt="Cover of the NewYork.com investor overview" /></div>
+        <div class="thumb"><img src="assets/deck-thumb.png" alt="Cover of the NewYork.com investor overview" /></div>
         <div class="mtop"><div class="ic">PDF</div><div class="tag">Start here</div></div>
         <div class="dt">The Opportunity — Overview</div>
         <div class="dd">A three-page brief on the asset, the precedent, and the terms — the essentials in five minutes.</div>
         <div class="go">Open / download <span class="arr">→</span></div>
       </a>
       <a class="mat" href="assets/full-investor-deck.pdf" target="_blank" rel="noopener">
-        <div class="thumb"><img src="assets/deck-thumb.png" alt="A slide from the full NewYork.com investor deck" /></div>
+        <div class="thumb"><img src="assets/overview-thumb.png" alt="A slide from the full NewYork.com investor deck" /></div>
         <div class="mtop"><div class="ic">PDF</div><div class="tag">Full detail</div></div>
         <div class="dt">Full Investor Deck</div>
         <div class="dd">The complete thesis, revenue model, comps, deal structure, exit scenarios, and investor protections.</div>
