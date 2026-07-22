@@ -23,10 +23,12 @@
   h1 em{font-style:italic;color:var(--gold)}
   p.sub{font-family:var(--serif);font-weight:300;font-size:18px;line-height:1.55;color:var(--cream-mute);margin-top:20px;text-wrap:pretty}
   form{margin-top:40px}
-  .codebox{display:flex;justify-content:center;gap:14px}
-  .codebox input{width:60px;height:76px;text-align:center;font-family:var(--serif);font-weight:300;font-size:38px;color:var(--cream);background:rgba(241,232,210,0.05);border:1px solid rgba(241,232,210,0.28);outline:none;transition:all .25s;caret-color:var(--gold)}
-  .codebox input:focus{border-color:var(--gold);background:rgba(200,172,109,0.08)}
-  .codebox.err input{border-color:#C0554E;animation:shake .4s}
+  .codewrap{position:relative;display:inline-block}
+  .codewrap input{position:absolute;inset:0;width:100%;height:100%;opacity:0;border:0;padding:0;margin:0;cursor:text;font-size:16px}
+  .boxes{display:flex;justify-content:center;gap:14px;pointer-events:none}
+  .boxes .box{width:60px;height:76px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:300;font-size:38px;color:var(--cream);background:rgba(241,232,210,0.05);border:1px solid rgba(241,232,210,0.28);transition:all .25s}
+  .codewrap.focus .boxes .box.active{border-color:var(--gold);background:rgba(200,172,109,0.08)}
+  .codewrap.err .boxes .box{border-color:#C0554E;animation:shake .4s}
   @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
   .msg{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#D98A83;margin-top:20px;height:14px;opacity:0;transition:opacity .2s}
   .msg.show{opacity:1}
@@ -43,11 +45,14 @@
     <h1>Enter your <em>access code.</em></h1>
     <p class="sub">This investor materials portal is private. Enter the four-digit code you were provided to continue.</p>
     <form id="gateForm" autocomplete="off" novalidate>
-      <div class="codebox" id="codebox">
-        <input type="text" inputmode="numeric" maxlength="1" aria-label="Digit 1" />
-        <input type="text" inputmode="numeric" maxlength="1" aria-label="Digit 2" />
-        <input type="text" inputmode="numeric" maxlength="1" aria-label="Digit 3" />
-        <input type="text" inputmode="numeric" maxlength="1" aria-label="Digit 4" />
+      <div class="codewrap" id="codewrap">
+        <input id="code" type="text" inputmode="numeric" maxlength="4" autocomplete="off" autofocus aria-label="Four-digit access code" />
+        <div class="boxes" aria-hidden="true">
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+        </div>
       </div>
       <div class="msg" id="msg">Incorrect code — please try again</div>
       <button type="submit">Enter <span class="arr">→</span></button>
@@ -57,37 +62,36 @@
 <script>
   var CODE="6920";
   if(sessionStorage.getItem('nyc_gate')==='1'){location.replace('home.html');}
-  var box=document.getElementById('codebox');
-  var inputs=[].slice.call(box.querySelectorAll('input'));
+  var wrap=document.getElementById('codewrap');
+  var code=document.getElementById('code');
+  var boxes=[].slice.call(wrap.querySelectorAll('.box'));
   var msg=document.getElementById('msg');
-  inputs[0].focus();
-  inputs.forEach(function(inp,i){
-    inp.addEventListener('input',function(){
-      inp.value=inp.value.replace(/[^0-9]/g,'');
-      box.classList.remove('err');msg.classList.remove('show');
-      if(inp.value&&i<inputs.length-1)inputs[i+1].focus();
+  function render(){
+    var v=code.value, focused=document.activeElement===code;
+    wrap.classList.toggle('focus',focused);
+    boxes.forEach(function(b,i){
+      b.textContent=v[i]||'';
+      var active=focused&&(i===v.length||(v.length===4&&i===3));
+      b.classList.toggle('active',active);
     });
-    inp.addEventListener('keydown',function(e){
-      if(e.key==='Backspace'&&!inp.value&&i>0)inputs[i-1].focus();
-    });
-    inp.addEventListener('paste',function(e){
-      e.preventDefault();
-      var d=(e.clipboardData.getData('text')||'').replace(/[^0-9]/g,'').slice(0,4);
-      d.split('').forEach(function(c,j){if(inputs[j])inputs[j].value=c;});
-      (inputs[Math.min(d.length,3)]).focus();
-    });
+  }
+  function fail(){wrap.classList.add('err');msg.classList.add('show');code.value='';render();code.focus();}
+  function attempt(){
+    if(code.value.length<4)return;
+    if(code.value===CODE){sessionStorage.setItem('nyc_gate','1');window.location.href='home.html';}
+    else{fail();}
+  }
+  code.addEventListener('input',function(){
+    code.value=code.value.replace(/[^0-9]/g,'').slice(0,4);
+    wrap.classList.remove('err');msg.classList.remove('show');
+    render();
+    if(code.value.length===4)attempt();
   });
-  document.getElementById('gateForm').addEventListener('submit',function(e){
-    e.preventDefault();
-    var entered=inputs.map(function(i){return i.value;}).join('');
-    if(entered===CODE){
-      sessionStorage.setItem('nyc_gate','1');
-      location.href='home.html';
-    }else{
-      box.classList.add('err');msg.classList.add('show');
-      inputs.forEach(function(i){i.value='';});inputs[0].focus();
-    }
-  });
-<\/script>
+  code.addEventListener('focus',render);
+  code.addEventListener('blur',render);
+  wrap.addEventListener('mousedown',function(e){e.preventDefault();code.focus();});
+  document.getElementById('gateForm').addEventListener('submit',function(e){e.preventDefault();attempt();});
+  code.focus();render();
+</script>
 </body>
 </html>
