@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>if(sessionStorage.getItem('nyc_gate')!=='1'){location.replace('index.html');}</script>
+<meta charset="utf-8" />
+<title>NewYork.com — Investor Opportunity</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --cream:#F1E8D2; --cream-2:#EADFC2; --cream-3:#E2D5B0;
+    --ink:#0E1E3A; --ink-soft:#213256; --ink-mute:#4A587A;
+    --gold:#B5944A; --gold-soft:#C8AC6D;
+    --rule:rgba(14,30,58,0.16); --rule-soft:rgba(14,30,58,0.08);
+    --serif:'Newsreader','Source Serif 4',Georgia,serif;
+    --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--serif);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:var(--gold);text-decoration:none}
+  a:hover{color:var(--ink)}
+  img{display:block;max-width:100%}
+
+  /* paper grain overlay */
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:0.5;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.05  0 0 0 0 0.08  0 0 0 0 0.15  0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
+
+  .wrap{max-width:1240px;margin:0 auto;padding:0 48px;position:relative;z-index:2}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:16px}
+  .eyebrow::before{content:"";width:48px;height:1px;background:var(--gold)}
+  .label{font-family:var(--mono);font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-mute)}
+
+  /* ---------- NAV ---------- */
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:22px 48px;transition:background .4s,border-color .4s,padding .4s;border-bottom:1px solid transparent}
+  nav.scrolled{background:rgba(241,232,210,0.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:16px 48px}
+  nav .brand{font-family:var(--serif);font-weight:500;font-size:26px;letter-spacing:-0.02em;color:var(--cream);transition:color .4s}
+  nav.scrolled .brand{color:var(--ink)}
+  nav .brand .tld{color:var(--gold);font-style:italic;font-weight:400}
+  nav .navcta{font-family:var(--mono);font-size:12px;letter-spacing:0.18em;text-transform:uppercase;padding:12px 22px;border:1px solid var(--cream);color:var(--cream);transition:all .3s}
+  nav.scrolled .navcta{border-color:var(--ink);color:var(--ink)}
+  nav .navcta:hover{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+  nav.scrolled .navcta:hover{color:var(--cream)}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:var(--ink)}
+  .hero .bg{position:absolute;inset:0;z-index:0}
+  .hero .bg img{width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:saturate(0.85) contrast(1.02)}
+  .hero .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,12,26,0.55) 0%,rgba(6,12,26,0.2) 35%,rgba(6,12,26,0.35) 60%,rgba(6,12,26,0.92) 100%)}
+  .hero .grain{position:absolute;inset:0;z-index:1;opacity:0.4;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n2'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n2)'/></svg>")}
+  .hero .inner{position:relative;z-index:2;padding:0 48px 88px;max-width:1240px;margin:0 auto;width:100%}
+  .hero .topconf{position:absolute;top:120px;left:48px;font-family:var(--mono);font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(241,232,210,0.75);display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(241,232,210,0.4);padding:8px 14px}
+  .hero .topconf .dot{width:6px;height:6px;border-radius:50%;background:var(--gold)}
+  .hero .heyebrow{font-family:var(--mono);font-size:12px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold-soft);display:flex;align-items:center;gap:16px;margin-bottom:28px}
+  .hero .heyebrow::before{content:"";width:48px;height:1px;background:var(--gold-soft)}
+  .hero h1{font-family:var(--serif);font-weight:300;font-size:clamp(64px,11vw,168px);line-height:0.88;letter-spacing:-0.04em;color:var(--cream);margin:0;font-variation-settings:"opsz" 72}
+  .hero h1 .tld{color:var(--gold-soft);font-style:italic;font-weight:400}
+  .hero .sub{font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(22px,2.4vw,34px);line-height:1.32;color:rgba(241,232,210,0.9);margin:32px 0 0;max-width:24ch;text-wrap:balance}
+  .hero .herofoot{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:32px;margin-top:56px;padding-top:32px;border-top:1px solid rgba(241,232,210,0.22)}
+  .hero .herostats{display:flex;gap:56px;flex-wrap:wrap}
+  .hero .herostats .hs .n{font-family:var(--serif);font-weight:300;font-size:clamp(36px,4vw,56px);line-height:1;letter-spacing:-0.02em;color:var(--cream);font-variation-settings:"opsz" 48}
+  .hero .herostats .hs .n em{font-style:italic;color:var(--gold-soft);font-size:0.55em}
+  .hero .herostats .hs .k{font-family:var(--mono);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(241,232,210,0.66);margin-top:10px}
+  .hero .heroact{display:flex;align-items:center;gap:22px}
+  .btn{display:inline-flex;align-items:center;gap:14px;font-family:var(--mono);font-size:13px;letter-spacing:0.18em;text-transform:uppercase;padding:18px 30px;border:1px solid var(--ink);color:var(--ink);background:transparent;cursor:pointer;transition:all .3s}
+  .btn .arr{font-family:var(--serif);font-style:italic;font-size:20px;letter-spacing:0;text-transform:none}
+  .btn.solid{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+  .btn.solid:hover{background:var(--ink);border-color:var(--ink);color:var(--cream)}
+  .btn.solid .arr{color:var(--ink)}
+  .btn.solid:hover .arr{color:var(--gold-soft)}
+  .btn.light{border-color:var(--cream);color:var(--cream)}
+  .btn.light:hover{background:var(--cream);color:var(--ink)}
+  .btn.gold-hollow{border-color:var(--gold-soft);color:var(--gold-soft)}
+  .btn.gold-hollow:hover{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+
+  /* ---------- SECTION SHELL ---------- */
+  section.band{padding:120px 0;position:relative}
+  section.band .wrap{position:relative;z-index:2}
+  .sec-head{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:end;margin-bottom:72px}
+  .sec-head h2{font-family:var(--serif);font-weight:400;font-size:clamp(38px,4.6vw,64px);line-height:1.02;letter-spacing:-0.02em;margin:20px 0 0;text-wrap:balance}
+  .sec-head h2 em{font-style:italic;font-weight:300;color:var(--ink-soft)}
+  .sec-head p{font-family:var(--serif);font-weight:300;font-size:21px;line-height:1.5;color:var(--ink-soft);margin:0;text-wrap:pretty}
+
+  /* ---------- OPPORTUNITY ---------- */
+  .opp{background:var(--ink);color:var(--cream)}
+  .opp::before{content:"";position:absolute;inset:0;background:radial-gradient(1000px 700px at 85% 15%,rgba(181,148,74,0.16),transparent 65%);z-index:1}
+  .opp .eyebrow,.opp .sec-head h2{color:var(--cream)}
+  .opp .sec-head h2 em{color:var(--gold-soft)}
+  .opp .sec-head p{color:rgba(241,232,210,0.82)}
+  .opp .disc{display:grid;grid-template-columns:1.1fr 1fr;gap:64px;align-items:center;border-top:1px solid rgba(241,232,210,0.2);padding-top:56px}
+  .opp .disc .big{font-family:var(--serif);font-weight:300;font-size:clamp(120px,17vw,240px);line-height:0.82;letter-spacing:-0.05em;color:var(--gold-soft);font-variation-settings:"opsz" 72}
+  .opp .disc .big em{font-style:italic;font-size:0.36em;color:var(--cream)}
+  .opp .disc .txt .l{font-family:var(--mono);font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold-soft)}
+  .opp .disc .txt p{font-family:var(--serif);font-weight:300;font-size:24px;line-height:1.5;color:rgba(241,232,210,0.9);margin:16px 0 0;text-wrap:pretty}
+  .opp .disc .txt p strong{color:var(--cream);font-weight:500}
+
+  /* ---------- COMPS ---------- */
+  .comps{background:var(--cream-2)}
+  .compgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--ink)}
+  .compgrid .c{padding:44px 36px 40px;border-right:1px solid var(--rule);position:relative}
+  .compgrid .c:last-child{border-right:0}
+  .compgrid .c.hl{background:var(--ink);color:var(--cream);margin:-2px 0 0}
+  .compgrid .c .nm{font-family:var(--serif);font-weight:400;font-size:34px;letter-spacing:-0.02em}
+  .compgrid .c .nm .dot{color:var(--gold)}
+  .compgrid .c.hl .nm .dot{color:var(--gold-soft)}
+  .compgrid .c .v{font-family:var(--serif);font-weight:300;font-size:clamp(56px,6vw,84px);line-height:0.95;letter-spacing:-0.03em;margin-top:24px;font-variation-settings:"opsz" 60}
+  .compgrid .c.hl .v{color:var(--gold-soft)}
+  .compgrid .c .note{font-family:var(--mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-mute);margin-top:20px;line-height:1.7}
+  .compgrid .c.hl .note{color:rgba(241,232,210,0.7)}
+  .comps .foot{font-family:var(--serif);font-style:italic;font-weight:300;font-size:20px;color:var(--ink-mute);margin-top:36px;text-align:center;text-wrap:balance}
+
+  /* ---------- DEAL TEASE ---------- */
+  .deal .dealgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:48px}
+  .deal .card{border-top:2px solid var(--gold);padding-top:28px;display:flex;flex-direction:column}
+  .deal .card .n{font-family:var(--serif);font-weight:300;font-size:clamp(68px,8vw,104px);line-height:0.85;letter-spacing:-0.03em;color:var(--ink);font-variation-settings:"opsz" 72}
+  .deal .card .n em{font-style:italic;color:var(--gold);font-size:0.5em}
+  .deal .card .t{font-family:var(--mono);font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-mute);margin-top:22px}
+  .deal .card .d{font-family:var(--serif);font-weight:300;font-size:19px;line-height:1.5;color:var(--ink-soft);margin-top:14px;text-wrap:pretty}
+  .deal .tranche{margin-top:80px;display:grid;grid-template-columns:auto 1fr auto 1fr;gap:0;align-items:stretch;border:1px solid var(--rule)}
+  .deal .tranche .tcell{padding:36px 40px;border-right:1px solid var(--rule)}
+  .deal .tranche .tcell:last-child{border-right:0}
+  .deal .tranche .tcell .step{font-family:var(--mono);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold)}
+  .deal .tranche .tcell .th{font-family:var(--serif);font-weight:400;font-size:27px;letter-spacing:-0.01em;margin-top:12px}
+  .deal .tranche .tcell .ts{font-family:var(--serif);font-style:italic;font-weight:300;font-size:17px;color:var(--ink-mute);margin-top:8px;line-height:1.4}
+  .deal .tranche .tarrow{display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:var(--serif);font-style:italic;font-size:34px;color:var(--gold);background:var(--cream-2)}
+
+  /* ---------- STREAMS / CATALYST ---------- */
+  .engine{background:var(--ink);color:var(--cream)}
+  .engine::before{content:"";position:absolute;inset:0;background:radial-gradient(900px 600px at 15% 90%,rgba(181,148,74,0.14),transparent 65%);z-index:1}
+  .engine .eyebrow,.engine .sec-head h2{color:var(--cream)}
+  .engine .sec-head h2 em{color:var(--gold-soft)}
+  .engine .sec-head p{color:rgba(241,232,210,0.82)}
+  .engine .streams{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid rgba(241,232,210,0.2)}
+  .engine .streams .st{padding:36px 34px 40px;border-right:1px solid rgba(241,232,210,0.16)}
+  .engine .streams .st:last-child{border-right:0}
+  .engine .streams .st .cnt{font-family:var(--serif);font-weight:300;font-size:72px;line-height:0.9;color:var(--gold-soft);font-variation-settings:"opsz" 48}
+  .engine .streams .st .ct{font-family:var(--mono);font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--cream);margin-top:16px}
+  .engine .streams .st .cd{font-family:var(--serif);font-style:italic;font-weight:300;font-size:18px;line-height:1.45;color:rgba(241,232,210,0.72);margin-top:12px}
+  .engine .cat{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;margin-top:64px;padding-top:56px;border-top:1px solid rgba(241,232,210,0.2)}
+  .engine .cat .big{font-family:var(--serif);font-weight:300;font-size:clamp(80px,11vw,150px);line-height:0.85;letter-spacing:-0.04em;color:var(--cream);font-variation-settings:"opsz" 72}
+  .engine .cat .big em{font-style:italic;color:var(--gold-soft);font-size:0.4em;display:block;margin-top:8px}
+  .engine .cat .txt p{font-family:var(--serif);font-weight:300;font-size:23px;line-height:1.5;color:rgba(241,232,210,0.9);margin:0;text-wrap:pretty}
+  .engine .cat .txt p strong{color:var(--cream);font-weight:500}
+  .engine .cat .txt .row{display:flex;gap:40px;margin-top:32px;flex-wrap:wrap}
+  .engine .cat .txt .row .mini .mn{font-family:var(--serif);font-weight:300;font-size:40px;color:var(--gold-soft)}
+  .engine .cat .txt .row .mini .mk{font-family:var(--mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(241,232,210,0.66);margin-top:8px}
+
+  /* ---------- PROTECTION STRIP ---------- */
+  .protect{background:var(--cream-2)}
+  .protect .row{display:grid;grid-template-columns:auto 1fr;gap:56px;align-items:center}
+  .protect .row .big{font-family:var(--serif);font-weight:300;font-size:clamp(120px,15vw,200px);line-height:0.8;letter-spacing:-0.04em;color:var(--gold);font-variation-settings:"opsz" 72;white-space:nowrap}
+  .protect .row .txt .l{font-family:var(--mono);font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold)}
+  .protect .row .txt h3{font-family:var(--serif);font-weight:400;font-size:clamp(30px,3.6vw,46px);line-height:1.05;letter-spacing:-0.02em;margin:14px 0 0}
+  .protect .row .txt p{font-family:var(--serif);font-weight:300;font-size:21px;line-height:1.5;color:var(--ink-soft);margin:16px 0 0;max-width:52ch;text-wrap:pretty}
+
+  /* ---------- CREDO / URGENCY ---------- */
+  .credo{background:var(--ink);color:var(--cream);position:relative;overflow:hidden;text-align:center;padding:150px 0}
+  .credo::before{content:"";position:absolute;inset:0;background:radial-gradient(900px 620px at 50% 8%,rgba(181,148,74,0.2),transparent 66%);z-index:1}
+  .credo .wrap{max-width:1040px}
+  .credo .eyebrow{justify-content:center;color:var(--gold-soft)}
+  .credo .line{font-family:var(--serif);font-weight:300;font-size:clamp(44px,6.4vw,92px);line-height:1;letter-spacing:-0.03em;margin:30px 0 0;font-variation-settings:"opsz" 72;text-wrap:balance}
+  .credo .line em{font-style:italic;color:var(--gold-soft)}
+  .credo .rule{width:64px;height:1px;background:var(--gold-soft);margin:44px auto}
+  .credo .kick{font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(22px,2.6vw,32px);line-height:1.4;color:rgba(241,232,210,0.86);margin:0 auto;max-width:30ch;text-wrap:balance}
+  .credo .kick b{font-style:normal;font-weight:500;color:var(--cream)}
+  .credo .now{font-family:var(--mono);font-size:12px;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold-soft);margin-top:44px}
+
+  /* ---------- ACCESS / GATE ---------- */
+  .access{background:var(--ink);color:var(--cream);position:relative;overflow:hidden}
+  .access::before{content:"";position:absolute;right:-10%;top:-20%;width:640px;height:640px;border-radius:50%;background:radial-gradient(circle at center,rgba(181,148,74,0.28),transparent 68%);z-index:1}
+  .access .eyebrow{color:var(--gold-soft)}
+  .access .ahead{max-width:60ch}
+  .access .ahead h2{font-family:var(--serif);font-weight:400;font-size:clamp(40px,4.8vw,66px);line-height:1;letter-spacing:-0.02em;margin:22px 0 0}
+  .access .ahead h2 em{font-style:italic;font-weight:300;color:var(--gold-soft)}
+  .access .ahead p{font-family:var(--serif);font-weight:300;font-size:22px;line-height:1.5;color:rgba(241,232,210,0.85);margin:28px 0 0;max-width:52ch;text-wrap:pretty}
+
+  /* featured materials */
+  .mats{margin-top:56px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .mat{position:relative;z-index:3;display:flex;flex-direction:column;padding:40px;border:1px solid rgba(241,232,210,0.22);background:rgba(241,232,210,0.04);text-align:left;transition:all .3s;min-height:340px}
+  .mat:hover{background:var(--cream);border-color:var(--cream)}
+  .mat .mtop{display:flex;align-items:flex-start;justify-content:space-between;gap:20px}
+  .mat .ic{width:52px;height:66px;flex:0 0 auto;border:1px solid var(--gold-soft);display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;color:var(--gold-soft);position:relative;transition:all .3s}
+  .mat .ic::before{content:"";position:absolute;top:0;right:0;border-width:0 14px 14px 0;border-style:solid;border-color:var(--ink) var(--ink) transparent transparent;transition:border-color .3s}
+  .mat:hover .ic{border-color:var(--gold)}
+  .mat:hover .ic::before{border-color:var(--cream) var(--cream) transparent transparent}
+  .mat .tag{font-family:var(--mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-soft);padding:7px 12px;border:1px solid rgba(181,148,74,0.5);transition:all .3s}
+  .mat:hover .tag{color:var(--gold);border-color:rgba(181,148,74,0.6)}
+  .mat .dt{font-family:var(--serif);font-weight:400;font-size:32px;line-height:1.05;letter-spacing:-0.01em;color:var(--cream);margin-top:34px;transition:color .3s}
+  .mat:hover .dt,.mat:hover .ic{color:var(--ink)}
+  .mat .dd{font-family:var(--serif);font-weight:300;font-size:18px;line-height:1.5;color:rgba(241,232,210,0.72);margin-top:14px;text-wrap:pretty;transition:color .3s;flex:1}
+  .mat:hover .dd{color:var(--ink-soft)}
+  .mat .go{display:inline-flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--cream);margin-top:32px;transition:color .3s}
+  .mat .go .arr{font-family:var(--serif);font-style:italic;font-size:19px;letter-spacing:0;text-transform:none;color:var(--gold-soft);transition:transform .3s,color .3s}
+  .mat:hover .go{color:var(--ink)}
+  .mat:hover .go .arr{color:var(--gold);transform:translateX(6px)}
+  /* deal room — full-width secondary row */
+  .mat.wide{grid-column:1 / -1;flex-direction:row;align-items:center;min-height:0;gap:28px;padding:30px 40px}
+  .mat.wide .ic{width:44px;height:56px}
+  .mat.wide .body{flex:1}
+  .mat.wide .dt{font-size:26px;margin-top:0}
+  .mat.wide .dd{margin-top:8px;font-size:17px}
+  .mat.wide .go{margin-top:0;flex:0 0 auto}
+
+  /* ---------- FOOTER ---------- */
+  footer.site{background:var(--cream-2);padding:80px 0 48px;position:relative}
+  footer.site .frow{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:56px;align-items:start;padding-bottom:48px;border-bottom:1px solid var(--rule)}
+  footer.site .brand{font-family:var(--serif);font-weight:400;font-size:44px;letter-spacing:-0.03em}
+  footer.site .brand .tld{color:var(--gold);font-style:italic}
+  footer.site .brand .tag{font-family:var(--serif);font-style:italic;font-weight:300;font-size:19px;color:var(--ink-mute);margin-top:12px;max-width:30ch}
+  footer.site .fcol .l{font-family:var(--mono);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:16px}
+  footer.site .fcol a,footer.site .fcol .v{display:block;font-family:var(--serif);font-size:20px;color:var(--ink);margin-bottom:8px}
+  footer.site .fcol a:hover{color:var(--gold)}
+  footer.site .fbot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;margin-top:32px;font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-mute)}
+
+  @media(max-width:960px){
+    nav,.hero .inner,.hero .topconf{padding-left:28px;padding-right:28px}
+    .hero .topconf{left:28px}
+    .wrap{padding:0 28px}
+    section.band{padding:80px 0}
+    .sec-head{grid-template-columns:1fr;gap:24px;margin-bottom:48px}
+    .opp .disc,.engine .cat,.protect .row,.access .agrid{grid-template-columns:1fr;gap:36px}
+    .compgrid,.deal .dealgrid,.engine .streams{grid-template-columns:1fr}
+    .compgrid .c,.engine .streams .st{border-right:0;border-bottom:1px solid var(--rule)}
+    .engine .streams .st{border-bottom-color:rgba(241,232,210,0.16)}
+    .deal .tranche{grid-template-columns:1fr}
+    .deal .tranche .tcell{border-right:0;border-bottom:1px solid var(--rule)}
+    .deal .tranche .tarrow{padding:14px;font-size:26px}
+    footer.site .frow{grid-template-columns:1fr;gap:36px}
+    .mats{grid-template-columns:1fr}
+    .mat.wide{flex-direction:column;align-items:flex-start;gap:18px}
+    .mat.wide .go{margin-top:4px}
+  }
+</style>
+<template id="__bundler_thumbnail" data-bg-color="#0E1E3A">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#0E1E3A"/>
+    <text x="600" y="430" text-anchor="middle" font-family="Georgia,serif" font-weight="300" font-size="150" letter-spacing="-6" fill="#F1E8D2">NewYork<tspan fill="#C8AC6D" font-style="italic">.com</tspan></text>
+    <rect x="558" y="500" width="84" height="2" fill="#C8AC6D"/>
+    <text x="600" y="560" text-anchor="middle" font-family="monospace" font-size="26" letter-spacing="10" fill="#C8AC6D">INVESTOR OPPORTUNITY</text>
+  </svg>
+</template>
+</head>
+<body>
+
+<nav id="nav">
+  <span class="brand">NewYork<span class="tld">.com</span></span>
+  <a href="#access" class="navcta">Investor Materials</a>
+</nav>
+
+<!-- ===== HERO ===== -->
+<header class="hero">
+  <div class="bg"><img src="assets/photo-skyline.jpg" alt="Aerial view of Manhattan at dusk" /></div>
+  <div class="grain"></div>
+  <span class="topconf"><span class="dot"></span> Confidential · Accredited Investors</span>
+  <div class="inner">
+    <div class="heyebrow">The Investment Opportunity</div>
+    <h1>NewYork<span class="tld">.com</span></h1>
+    <p class="sub">Own the digital front door to the most valuable city on earth.</p>
+    <div class="herofoot">
+      <div class="herostats">
+        <div class="hs"><div class="n">$15M<em>+</em></div><div class="k">Market value · domain alone</div></div>
+        <div class="hs"><div class="n">70<em>%</em></div><div class="k">Discount to market</div></div>
+        <div class="hs"><div class="n">$3M</div><div class="k">Raising now · Tranche 1</div></div>
+      </div>
+      <div class="heroact">
+        <a href="#access" class="btn light">Open the materials <span class="arr">→</span></a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== OPPORTUNITY ===== -->
+<section class="band opp" id="opportunity">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="eyebrow">The Opportunity</div><h2>A once-in-a-generation asset, <em>priced far below what the market has paid for it.</em></h2></div>
+      <p>NewYork.com is the exact-match domain for the world's most-visited, most-monetizable city — a live, revenue-generating platform available at a fraction of comparable geo-domain valuations. The window is open now. It will not stay open.</p>
+    </div>
+    <div class="disc">
+      <div class="big">70<em>%</em></div>
+      <div class="txt">
+        <div class="l">Discount to market value</div>
+        <p>Secured on a structured path to full ownership at up to a <strong>70% discount</strong> to the domain's standalone market value. Why now? <strong>Timing</strong> — a rare alignment of catalysts the market hasn't priced in yet.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== COMPS ===== -->
+<section class="band comps" id="precedent">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="eyebrow">The Precedent</div><h2>The market has paid nine figures for this exact pattern. <em>Repeatedly.</em></h2></div>
+      <p>Exact-match city domains have transacted at nine- and ten-figure valuations. New York is the largest, most-trafficked, most-monetizable instance of the pattern — and it sits above every comp.</p>
+    </div>
+    <div class="compgrid">
+      <div class="c"><div class="nm">Vegas<span class="dot">.</span>com</div><div class="v">$240M</div><div class="note">Acquired by Vivid Seats<br>Nov 2023</div></div>
+      <div class="c"><div class="nm">LasVegas<span class="dot">.</span>com</div><div class="v">$90M</div><div class="note">Acquired by Vegas.com<br>2005</div></div>
+      <div class="c hl"><div class="nm">NewYork<span class="dot">.</span>com</div><div class="v">$15M+</div><div class="note">Market value · today<br>The opportunity</div></div>
+    </div>
+    <p class="foot">New York City draws roughly 1.6× the annual visitation of Las Vegas — with materially deeper spend per visitor.</p>
+  </div>
+</section>
+
+<!-- ===== CREDO / URGENCY ===== -->
+<section class="band credo" id="credo">
+  <div class="wrap">
+    <div class="eyebrow">The Window Is Now</div>
+    <p class="line">There is <em>one</em> NewYork.com.</p>
+    <div class="rule"></div>
+    <p class="kick">The exact-match front door to the world's #1 city — available once, at a fraction of what the market has paid for far smaller assets. <b>Opportunities of this magnitude do not wait, and they are not repeated.</b></p>
+    <div class="now">Act now · Closing August 20, 2026</div>
+  </div>
+</section>
+
+<!-- ===== ACCESS / GATE ===== -->
+<section class="band access" id="access">
+  <div class="wrap">
+    <div class="ahead">
+      <div class="eyebrow">Investor Materials</div>
+      <h2>Open the materials — <em>no form, no wait.</em></h2>
+      <p>Everything you need to evaluate the opportunity, available to open or download right now. Start with the overview, then go deep with the full investor deck.</p>
+    </div>
+    <div class="mats">
+      <a class="mat" href="assets/investor-overview.pdf" target="_blank" rel="noopener">
+        <div class="mtop"><div class="ic">PDF</div><div class="tag">Start here</div></div>
+        <div class="dt">The Opportunity — Overview</div>
+        <div class="dd">A three-page brief on the asset, the precedent, and the terms — the essentials in five minutes.</div>
+        <div class="go">Open / download <span class="arr">→</span></div>
+      </a>
+      <a class="mat" href="assets/full-investor-deck.pdf" target="_blank" rel="noopener">
+        <div class="mtop"><div class="ic">PDF</div><div class="tag">Full detail</div></div>
+        <div class="dt">Full Investor Deck</div>
+        <div class="dd">The complete thesis, revenue model, comps, deal structure, exit scenarios, and investor protections.</div>
+        <div class="go">Open / download <span class="arr">→</span></div>
+      </a>
+      <a class="mat wide" href="deal-room.html" target="_blank" rel="noopener">
+        <div class="ic">↗</div>
+        <div class="body">
+          <div class="dt">The Deal Room</div>
+          <div class="dd">Contracts, agreements &amp; financial modeling for investors ready to move forward.</div>
+        </div>
+        <div class="go">Enter <span class="arr">→</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site">
+  <div class="wrap">
+    <div class="frow">
+      <div>
+        <div class="brand">NewYork<span class="tld">.com</span></div>
+        <div class="tag">The digital front door to the most valuable city on earth.</div>
+      </div>
+      <div class="fcol">
+        <div class="l">Contact</div>
+        <a href="https://calendly.com/sqrd-clayton/30min-call" target="_blank" rel="noopener">Book a 30-min call</a>
+        <span class="v">801.828.6974</span>
+      </div>
+      <div class="fcol">
+        <div class="l">Operating Partners</div>
+        <span class="v">McKay G. Lewis</span>
+        <span class="v">Clayton R. Bird</span>
+        <span class="v" style="font-family:var(--mono);font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-mute)">Slice of Manhattan, LLC</span>
+      </div>
+    </div>
+    <div class="fbot">
+      <span>© 2026 Slice of Manhattan, LLC</span>
+      <span>Confidential — not an offer to sell securities</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // nav scroll state
+  const nav=document.getElementById('nav');
+  const onScroll=()=>nav.classList.toggle('scrolled',window.scrollY>60);
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+</script>
+</body>
+</html>

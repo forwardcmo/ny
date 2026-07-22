@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>if(sessionStorage.getItem('nyc_gate')!=='1'){location.replace('index.html');}</script>
+<meta charset="utf-8" />
+<title>The Deal Room — NewYork.com</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{--ink:#0E1E3A;--cream:#F1E8D2;--cream-mute:rgba(241,232,210,0.7);--gold:#C8AC6D;--serif:"Newsreader",Georgia,serif;--mono:"JetBrains Mono",monospace}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{background:var(--ink);color:var(--cream);font-family:var(--serif);display:flex;align-items:center;justify-content:center;min-height:100vh;padding:48px;position:relative;overflow:hidden}
+  body::before{content:"";position:absolute;top:-25%;right:-15%;width:720px;height:720px;border-radius:50%;background:radial-gradient(circle at center,rgba(200,172,109,0.22),transparent 68%);z-index:0}
+  .wrap{position:relative;z-index:1;max-width:640px;text-align:center}
+  .brand{font-family:var(--serif);font-weight:300;font-size:34px;letter-spacing:-0.02em}
+  .brand .tld{color:var(--gold);font-style:italic}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);display:inline-flex;align-items:center;gap:16px;margin-top:56px}
+  .eyebrow::before,.eyebrow::after{content:"";width:40px;height:1px;background:var(--gold)}
+  h1{font-family:var(--serif);font-weight:300;font-size:clamp(48px,8vw,84px);line-height:0.95;letter-spacing:-0.03em;margin-top:28px}
+  h1 em{font-style:italic;color:var(--gold)}
+  p{font-family:var(--serif);font-weight:300;font-size:21px;line-height:1.6;color:var(--cream-mute);margin-top:28px;text-wrap:pretty}
+  .rule{width:60px;height:1px;background:var(--gold);margin:40px auto 0}
+  .status{font-family:var(--mono);font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--cream-mute);margin-top:40px;display:inline-flex;align-items:center;gap:12px}
+  .status .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:pulse 1.8s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.35;transform:scale(0.7)}}
+  a.back{display:inline-flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--cream);text-decoration:none;padding:15px 28px;border:1px solid rgba(241,232,210,0.4);margin-top:48px;transition:all .3s}
+  a.back:hover{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+  a.back .arr{font-family:var(--serif);font-style:italic;font-size:18px;letter-spacing:0}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">NewYork<span class="tld">.com</span></div>
+    <div class="eyebrow">The Deal Room</div>
+    <h1>Being <em>updated.</em></h1>
+    <p>The Deal Room — contracts, agreements, and financial modeling — is currently being refreshed. It will be live again shortly.</p>
+    <div class="rule"></div>
+    <div class="status"><span class="dot"></span>Updating &middot; back online soon</div>
+    <div><a class="back" href="home.html"><span class="arr">←</span> Return to investor materials</a></div>
+  </div>
+</body>
+</html>
